@@ -1,5 +1,6 @@
 package tests;
 
+import com.github.javafaker.Faker;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
@@ -14,17 +15,12 @@ public class BaseTest {
 
     protected final static String USERNAME = "mae9077-8zeg@force.com";
     protected final static String PASSWORD = "2506898qaz";
-    protected final static String FIRSTNAME = "Natasha";
-    protected final static String LASTNAME = "Kokina";
-    protected final static String MIDDLE_NAME = "nKokina";
-    protected final static String TITLE = "nKokina";
-    protected final static String EMAIL = "mas@gmail.com";
-    protected final static String SUFFIX = "k";
-    protected final static String PHONE = "256 85 54";
-    protected final static String MOBILE_PHONE = "+3752985544255";
+
     protected WebDriver driver;
     protected LoginPage loginPage;
     protected HomePage homePage;
+    protected Faker faker;
+
 
     @BeforeClass(alwaysRun = true)
     public void setUp(ITestContext testContext) throws Exception {
@@ -36,6 +32,7 @@ public class BaseTest {
         testContext.setAttribute("driver", driver);
         loginPage = new LoginPage(driver);
         homePage = new HomePage(driver);
+        faker = new Faker();
     }
 
     @BeforeMethod(alwaysRun = true)
