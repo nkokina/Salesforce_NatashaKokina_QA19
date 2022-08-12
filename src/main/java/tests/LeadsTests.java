@@ -23,11 +23,8 @@ public class LeadsTests extends BaseTest {
         newLeadModal = new NewLeadModal(driver);
     }
 
-    @Test(dataProvider = "createLeadTestData")
-    public void createLeadTest(String company, LeadStatus leadStatus, String lastName, String firstName, Salutation salutation,
-                               String suffix, String middleName, String title, String email, String webSite, String phone,
-                               String mobile, Rating rating, Industry industry, String numberOfEmployees, LeadSource leadSource,
-                               String address, String street, String province, String postalCode) {
+    @Test(dataProvider = "newLeadData")
+    public void createLeadTest(Lead testLead) {
         loginPage.login(USERNAME, PASSWORD);
         homePage.waitForPageLoaded();
         homePage.openLeadsTab();
@@ -36,43 +33,27 @@ public class LeadsTests extends BaseTest {
         leadsPage.waitForPageLoadedNew();
         Assert.assertTrue(leadsPage.isLeadsIconDisplayed(), "Leads page transition failed");
 
-        Lead testLead = new Lead.LeadBuilder(company, leadStatus)
-                .lastName(lastName)
-                .firstName(firstName)
-                .salutation(salutation)
-                .suffix(suffix)
-                .middleName(middleName)
-                .title(title)
-                .email(email)
-                .webSite(webSite)
-                .phone(phone)
-                .mobilePhone(mobile)
-                .rating(rating)
-                .industry(industry)
-                .numberOfEmployees(numberOfEmployees)
-                .leadSource(leadSource)
-                .address(address)
-                .street(street)
-                .province(province)
-                .postalCode(postalCode)
-                .build();
-
-        newLeadModal.fillFord(testLead);
+        newLeadModal.fillingOutTheForm(testLead);
         newLeadModal.clickSaveButton();
-        Assert.assertTrue(leadsPage.isConfimationPopupPresent());
+        leadsPage.waitForPopupPresent();
+        Assert.assertTrue(leadsPage.isConfimationPopupPresent("was created"), "Lead not saved");
+        leadsPage.openDetails();
+        leadsDetailsPage.getLeadInfo();
         Assert.assertEquals(leadsDetailsPage.getLeadInfo(), testLead);
     }
 
-    @DataProvider
-    public Object[][] createContactTestData() {
+    @DataProvider(name = "newLeadData")
+    public Object[][] createLeadTestData() {
         return new Object[][]{
-                {faker.company().name(), LeadStatus.WORKING, faker.name().lastName(), faker.name().firstName(), Salutation.MS,
-                        faker.name().suffix(), faker.name().username(), faker.name().title(), faker.internet().emailAddress(),
-                        faker.internet().url(), faker.phoneNumber().phoneNumber(), faker.phoneNumber().phoneNumber(),
-                        Rating.HOT, Industry.BIOTECHNOLOGY, faker.number().digit(), LeadSource.EMPLOYEE,
-                        faker.address().cityName(), faker.address().streetName(), faker.address().state(), faker.address().zipCode()},
-                {faker.company().name(), LeadStatus.WORKING},
-                {"Sauce Labs Bolt T-Shirt", "Get your testing superhero on with the Sauce Labs bolt T-shirt. From American Apparel, 100% ringspun combed cotton, heather gray with red bolt.", "15.99"},
+                {Lead.builder().company(faker.company().name()).leadStatus(LeadStatus.WORKING).lastName(faker.name().lastName())
+                        .firstName(faker.name().firstName()).salutation(Salutation.MS).suffix(faker.name().suffix())
+                        .middleName(faker.name().username()).title(faker.name().title()).email(faker.internet().emailAddress())
+                        .webSite(faker.internet().emailAddress()).phone(faker.phoneNumber().phoneNumber())
+                        .mobilePhone(faker.phoneNumber().phoneNumber()).rating(Rating.HOT).industry(Industry.BIOTECHNOLOGY)
+                        .numberOfEmployees(faker.number().digit()).leadSource(LeadSource.EMPLOYEE).address(faker.address().cityName())
+                        .street(faker.address().streetName()).province(faker.address().state()).postalCode(faker.address().zipCode())
+                        .build()},
+                {Lead.builder().company(faker.company().name()).leadStatus(LeadStatus.WORKING).lastName(faker.name().lastName()).build()},
         };
     }
 }

@@ -2,9 +2,11 @@ package pages;
 
 import elements.LightningFormattedElement;
 import enums.Salutation;
+import lombok.extern.log4j.Log4j2;
 import models.Contact;
 import org.openqa.selenium.WebDriver;
 
+@Log4j2
 public class ContactDetailsPage extends BasePage {
     public ContactDetailsPage(WebDriver driver) {
         super(driver);
@@ -15,14 +17,19 @@ public class ContactDetailsPage extends BasePage {
     }
 
     public Contact getContactInfo() {
-        String lastName = new LightningFormattedElement(driver, "Last Name").getText();
+        log.info("Retrieving existing values from a partition Details");
+        String lastName = new LightningFormattedElement(driver, "Name").getText();
         String accountName = new LightningFormattedElement(driver, "Account Name").getText();
-        Contact.ContactBuilder contactBuilder = new Contact.ContactBuilder(lastName, accountName);
-        String middleName = new LightningFormattedElement(driver, "Middle Name").getText();
+        Contact.ContactBuilder contactBuilder = Contact.builder().lastName(lastName).accountName(accountName);
+        String firstName = new LightningFormattedElement(driver, "Name").getText();
+        if (firstName != "") {
+            contactBuilder.firstName(firstName);
+        }
+        String middleName = new LightningFormattedElement(driver, "Name").getText();
         if (middleName != "") {
             contactBuilder.middleName(middleName);
         }
-        String suffix = new LightningFormattedElement(driver, "Suffix").getText();
+        String suffix = new LightningFormattedElement(driver, "Name").getText();
         if (suffix != "") {
             contactBuilder.suffix(suffix);
         }
@@ -38,7 +45,7 @@ public class ContactDetailsPage extends BasePage {
         if (phone != "") {
             contactBuilder.phone(phone);
         }
-        String mobilePhone = new LightningFormattedElement(driver, "Mobile Phone").getText();
+        String mobilePhone = new LightningFormattedElement(driver, "Mobile").getText();
         if (mobilePhone != "") {
             contactBuilder.mobilePhone(mobilePhone);
         }
@@ -54,42 +61,27 @@ public class ContactDetailsPage extends BasePage {
         if (fax != "") {
             contactBuilder.fax(fax);
         }
-        String address = new LightningFormattedElement(driver, "Address").getText();
+        String address = new LightningFormattedElement(driver, "Mailing Address").getText();
         if (address != "") {
             contactBuilder.mailingAddress(address);
         }
-        String street = new LightningFormattedElement(driver, "Street").getText();
+        String street = new LightningFormattedElement(driver, "Mailing Address").getText();
         if (street != "") {
             contactBuilder.street(street);
         }
-        String province = new LightningFormattedElement(driver, "Province").getText();
+        String province = new LightningFormattedElement(driver, "Mailing Address").getText();
         if (province != "") {
             contactBuilder.province(province);
         }
-        String postalCode = new LightningFormattedElement(driver, "Postal Code").getText();
+        String postalCode = new LightningFormattedElement(driver, "Mailing Address").getText();
         if (postalCode != "") {
             contactBuilder.postalCode(postalCode);
         }
-        String salutation = new LightningFormattedElement(driver, "Salutation").getText();
+        String salutation = new LightningFormattedElement(driver, "Name").getText();
         if (salutation != "") {
             contactBuilder.salutation(Salutation.fromString(salutation));
         }
-        return new Contact.ContactBuilder(
-                lastName, accountName)
-                .salutation(Salutation.fromString(salutation))
-                .middleName(middleName)
-                .suffix(suffix)
-                .title(title)
-                .email(email)
-                .phone(phone)
-                .mobilePhone(mobilePhone)
-                .reportsTo(reportsTo)
-                .department(department)
-                .fax(fax)
-                .mailingAddress(address)
-                .street(street)
-                .province(province)
-                .postalCode(postalCode).build();
+        return Contact.builder().build();
     }
 }
 

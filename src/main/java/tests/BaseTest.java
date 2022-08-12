@@ -26,7 +26,7 @@ public class BaseTest {
     public void setUp(ITestContext testContext) throws Exception {
         String browserName = System.getProperty("browser", "chrome");
         driver = DriverFactory.getDriver(browserName);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
         driver.manage().window().maximize();
         testContext.setAttribute("driver", driver);

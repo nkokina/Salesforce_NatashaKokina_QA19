@@ -4,15 +4,18 @@ import elements.LightningBaseCombobox;
 import elements.LightningCombobox;
 import elements.LightningInput;
 import elements.LightningTextaria;
+import lombok.extern.log4j.Log4j2;
 import models.Lead;
 import org.openqa.selenium.WebDriver;
 
+@Log4j2
 public class NewLeadModal extends BaseModal {
     public NewLeadModal(WebDriver driver) {
         super(driver);
     }
 
-    public void fillFord(Lead inputLead) {
+    public void fillingOutTheForm(Lead inputLead) {
+        log.info(String.format("Creating new Lead with Lname=%s and Company=%s", inputLead.getLastName(), inputLead.getCompany()));
         new LightningInput(driver, "Company").setValue(inputLead.getCompany());
         new LightningCombobox(driver, "Lead Status").selectByVisibleText(inputLead.getLeadStatus().name);
         new LightningInput(driver, "Last Name").setValue(inputLead.getLastName());
@@ -33,7 +36,5 @@ public class NewLeadModal extends BaseModal {
         new LightningTextaria(driver, "Street").setValue(inputLead.getStreet());
         new LightningInput(driver, "State/Province").setValue(inputLead.getProvince());
         new LightningInput(driver, "Zip/Postal Code").setValue(inputLead.getPostalCode());
-
     }
-
 }

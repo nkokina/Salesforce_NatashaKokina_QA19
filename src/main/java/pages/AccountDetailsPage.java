@@ -3,9 +3,11 @@ package pages;
 import elements.LightningFormattedElement;
 import enums.Industry;
 import enums.Type;
+import lombok.extern.log4j.Log4j2;
 import models.Account;
 import org.openqa.selenium.WebDriver;
 
+@Log4j2
 public class AccountDetailsPage extends BasePage {
     public AccountDetailsPage(WebDriver driver) {
         super(driver);
@@ -16,8 +18,9 @@ public class AccountDetailsPage extends BasePage {
     }
 
     public Account getAccountInfo() {
+        log.info("Retrieving existing values from a partition Details");
         String accountName = new LightningFormattedElement(driver, "Account Name").getText();
-        Account.AccountBuilder accountBuilder = new Account.AccountBuilder(accountName);
+        Account.AccountBuilder accountBuilder = Account.builder().accountName(accountName);
         String type = new LightningFormattedElement(driver, "Type").getText();
         if (type != "") {
             accountBuilder.type(Type.fromString(type));
@@ -78,24 +81,7 @@ public class AccountDetailsPage extends BasePage {
         if (billingPostalCode != "") {
             accountBuilder.billingPostalCode(billingPostalCode);
         }
-        return new Account.AccountBuilder(
-                accountName)
-                .type(Type.fromString(type))
-                .webSite(webSite)
-                .description(description)
-                .parentAccount(parentAccount)
-                .phone(phone)
-                .industry(Industry.valueOf(industry))
-                .employees(employees)
-                .billingAddress(billingAddress)
-                .shippingAddress(shippingAddress)
-                .billingStreet(billingStreet)
-                .shippingStreet(shippingStreet)
-                .billingProvince(billingProvince)
-                .shippingProvince(shippingProvince)
-                .shippingPostalCode(shippingPostalCode)
-                .billingPostalCode(billingPostalCode).build();
+        return Account.builder().build();
     }
-
 }
 

@@ -25,9 +25,7 @@ public class ContactTests extends BaseTest {
 
 
     @Test(dataProvider = "createContactTestData")
-    public void createContactTest(String lastName, String firstName, Salutation salutation, String middleName, String suffix,
-                                  String title, String email, String phone, String mobile, String repostTo, String department,
-                                  String fax, String mailingAddress, String street, String province, String postalCode) {
+    public void createContactTest(Contact testContact) {
         loginPage.login(USERNAME, PASSWORD);
         homePage.waitForUserIconDisplayed();
         homePage.openContactsTab();
@@ -35,27 +33,10 @@ public class ContactTests extends BaseTest {
         contactPage.openNewButton();
         contactPage.waitForPageLoadedNew();
         Assert.assertTrue(contactPage.isContactsIconDisplayed(), "Contacts page transition failed");
-
-        Contact testContact = new Contact.ContactBuilder(lastName, firstName)
-                .salutation(salutation)
-                .middleName(middleName)
-                .suffix(suffix)
-                .title(title)
-                .email(email)
-                .phone(phone)
-                .mobilePhone(mobile)
-                .reportsTo(repostTo)
-                .department(department)
-                .fax(fax)
-                .mailingAddress(mailingAddress)
-                .street(street)
-                .province(province)
-                .postalCode(postalCode)
-                .build();
-
-        newContactModal.fillFord(testContact);
+        newContactModal.fillingOutTheForm(testContact);
         newContactModal.clickSaveButton();
-        Assert.assertTrue(contactPage.isConfimationPopupPresent());
+        Assert.assertTrue(contactPage.isConfimationPopupPresent("was created"));
+        contactPage.openDetails();
         Assert.assertEquals(contactDetailsPage.getContactInfo(), testContact);
 
     }
@@ -63,13 +44,15 @@ public class ContactTests extends BaseTest {
     @DataProvider
     public Object[][] createContactTestData() {
         return new Object[][]{
-                {faker.name().lastName(), faker.name().firstName(), Salutation.MS, faker.name().username(),
-                        faker.name().suffix(), faker.name().title(), faker.internet().emailAddress(),
-                        faker.phoneNumber().phoneNumber(), faker.phoneNumber().phoneNumber(), faker.name().fullName(),
-                        faker.company().name(), faker.phoneNumber().phoneNumber(), faker.address().cityName(),
-                        faker.address().streetName(), faker.address().state(), faker.address().zipCode()},
-                {faker.name().lastName(), faker.name().firstName()},
-                {"Sauce Labs Bolt T-Shirt", "Get your testing superhero on with the Sauce Labs bolt T-shirt. From American Apparel, 100% ringspun combed cotton, heather gray with red bolt.", "15.99"},
+                {Contact.builder().lastName(faker.name().lastName()).firstName(faker.name().firstName()).salutation(Salutation.MS)
+                        .middleName(faker.name().username()).suffix(faker.name().suffix()).title(faker.name().title())
+                        .email(faker.internet().emailAddress()).phone(faker.phoneNumber().phoneNumber())
+                        .mobilePhone(faker.phoneNumber().phoneNumber()).accountName(faker.name().name()).
+                        reportsTo(faker.name().fullName()).department(faker.company().name()).fax(faker.phoneNumber().phoneNumber())
+                        .mailingAddress(faker.address().cityName()).street(faker.address().streetName())
+                        .province(faker.address().state()).postalCode(faker.address().zipCode()).build()},
+
+                {Contact.builder().lastName(faker.name().lastName()).accountName(faker.name().firstName()).build()},
         };
     }
 }

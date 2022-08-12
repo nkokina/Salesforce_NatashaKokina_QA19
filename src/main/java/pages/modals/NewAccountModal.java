@@ -4,33 +4,34 @@ import elements.LightningBaseCombobox;
 import elements.LightningCombobox;
 import elements.LightningInput;
 import elements.LightningTextaria;
+import lombok.extern.log4j.Log4j2;
 import models.Account;
 import org.openqa.selenium.WebDriver;
 
-
+@Log4j2
 public class NewAccountModal extends BaseModal {
 
     public NewAccountModal(WebDriver driver) {
         super(driver);
     }
 
-    public void fillFord(Account inputAccount) {
-        new LightningInput(driver, "Account Name").setValue(inputAccount.getAccountName());
-        new LightningInput(driver, "Website").setValue(inputAccount.getWebSite());
-        new LightningTextaria(driver, "Description").setValue(inputAccount.getDescription());
-        new LightningBaseCombobox(driver, "Parent Account").selectByVisibleText(inputAccount.getParentAccount());
-        new LightningInput(driver, "Phone").setValue(inputAccount.getPhone());
-        new LightningInput(driver, "Employees").setValue(inputAccount.getEmployees());
-        new LightningInput(driver, "Billing Address").setValue(inputAccount.getBillingAddress());
-        new LightningInput(driver, "Shipping Address").setValue(inputAccount.getShippingAddress());
-        new LightningTextaria(driver, "Billing Street").setValue(inputAccount.getBillingStreet());
-        new LightningTextaria(driver, "Shipping Street").setValue(inputAccount.getShippingStreet());
-        new LightningInput(driver, "Billing State/Province").setValue(inputAccount.getBillingProvince());
-        new LightningInput(driver, "Shipping State/Province").setValue(inputAccount.getShippingProvince());
-        new LightningInput(driver, "Billing Zip/Postal Code").setValue(inputAccount.getBillingPostalCode());
-        new LightningInput(driver, "Shipping Zip/Postal Code").setValue(inputAccount.getShippingPostalCode());
-        new LightningCombobox(driver, "Industry").selectByVisibleText(inputAccount.getIndustry().getName());
-        new LightningCombobox(driver, "Type").selectByVisibleText(inputAccount.getType().getName());
-
+    public void fillingOutTheForm(Account inputAccount) {
+        log.info(String.format("Creating new Account with Aname=%s", inputAccount.getAccountName()));
+        new LightningInput(driver, "Account Name").seyValueAccountName(inputAccount.getAccountName());
+        new LightningBaseCombobox(driver, "Search Accounts...").selectByVisibleTextAccount(inputAccount.getParentAccount());
+        new LightningInput(driver, "Website").seyValueAccount(inputAccount.getWebSite());
+        new LightningTextaria(driver, "Description").setValueAccount(inputAccount.getDescription());
+        new LightningInput(driver, "Phone").seyValueAccount(inputAccount.getPhone());
+        new LightningInput(driver, "Employees").seyValueAccount(inputAccount.getEmployees());
+        new LightningInput(driver, "Billing Address").seyValueAccountButton(inputAccount.getBillingAddress());
+        new LightningInput(driver, "Shipping Address").seyValueAccountButton(inputAccount.getShippingAddress());
+        new LightningTextaria(driver, "Billing Street").setValueAccount(inputAccount.getBillingStreet());
+        new LightningTextaria(driver, "Shipping Street").setValueAccount(inputAccount.getShippingStreet());
+        new LightningInput(driver, "Billing State/Province").seyValueAccount(inputAccount.getBillingProvince());
+        new LightningInput(driver, "Shipping State/Province").seyValueAccount(inputAccount.getShippingProvince());
+        new LightningInput(driver, "Billing Zip/Postal Code").seyValueAccount(inputAccount.getBillingPostalCode());
+        new LightningInput(driver, "Shipping Zip/Postal Code").seyValueAccount(inputAccount.getShippingPostalCode());
+        new LightningCombobox(driver, "Industry").selectByVisibleTextAccount(inputAccount.getIndustry().name);
+        new LightningCombobox(driver, "Type").selectByVisibleTextAccount(inputAccount.getType().name);
     }
 }
