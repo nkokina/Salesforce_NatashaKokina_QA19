@@ -17,6 +17,7 @@ public class ContactPage extends EntityBasePage {
     public void waitForPageLoadedNew() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(CONTACTS_NEW));
     }
+
     public boolean isContactsIconDisplayed() {
         return driver.findElement(ICON_LOCATOR).isDisplayed();
     }

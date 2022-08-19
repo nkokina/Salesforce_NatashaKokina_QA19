@@ -14,7 +14,7 @@ public class LightningFormattedElement extends BaseElement {
     }
 
     public String getText() {
-        log.debug("Setting input value = %s to input with locator = %s", String.format(visibleTextLocator, label));
+        log.debug("Get input value = %s to input with locator = %s", String.format(visibleTextLocator, label));
         return driver.findElement(By.xpath(String.format(visibleTextLocator, label))).getText();
     }
 }

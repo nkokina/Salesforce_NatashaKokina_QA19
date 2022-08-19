@@ -6,7 +6,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LeadsPage extends EntityBasePage {
 
-    private final static By ICON_LOCATOR = By.xpath("//*[@class='slds-var-p-right_x-small' and text()='Leads']");
+    private final static By ICON_LOCATOR = By.xpath(
+            "//*[@class='slds-var-p-right_x-small' and text()='Leads']");
     private final static By LEADS_NEW = By.xpath(
             "//*[@class='slds-modal__title slds-hyphenate slds-text-heading--medium' and text()='New Lead']");
 

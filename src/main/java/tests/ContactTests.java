@@ -1,6 +1,5 @@
 package tests;
 
-import enums.Salutation;
 import models.Contact;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -35,24 +34,25 @@ public class ContactTests extends BaseTest {
         Assert.assertTrue(contactPage.isContactsIconDisplayed(), "Contacts page transition failed");
         newContactModal.fillingOutTheForm(testContact);
         newContactModal.clickSaveButton();
-        Assert.assertTrue(contactPage.isConfimationPopupPresent("was created"));
         contactPage.openDetails();
-        Assert.assertEquals(contactDetailsPage.getContactInfo(), testContact);
+        Assert.assertEquals(contactDetailsPage.getContactInfo(), testContact, "Data does not match");
 
     }
 
     @DataProvider
     public Object[][] createContactTestData() {
         return new Object[][]{
-                {Contact.builder().lastName(faker.name().lastName()).firstName(faker.name().firstName()).salutation(Salutation.MS)
-                        .middleName(faker.name().username()).suffix(faker.name().suffix()).title(faker.name().title())
-                        .email(faker.internet().emailAddress()).phone(faker.phoneNumber().phoneNumber())
-                        .mobilePhone(faker.phoneNumber().phoneNumber()).accountName(faker.name().name()).
-                        reportsTo(faker.name().fullName()).department(faker.company().name()).fax(faker.phoneNumber().phoneNumber())
-                        .mailingAddress(faker.address().cityName()).street(faker.address().streetName())
-                        .province(faker.address().state()).postalCode(faker.address().zipCode()).build()},
+//                {Contact.builder().lastName(faker.name().lastName()).firstName(faker.name().firstName()).salutation(Salutation.MS)
+//                        .middleName(faker.name().username()).suffix(faker.name().suffix()).title(faker.name().title())
+//                        .email(faker.internet().emailAddress()).phone(faker.phoneNumber().phoneNumber())
+//                        .mobilePhone(faker.phoneNumber().phoneNumber()).accountName(faker.name().name())
+//                        .department(faker.company().name()).fax(faker.phoneNumber().phoneNumber())
+//                        .mailingAddress("Minsk").street("Ykrainki").province("Minskiy").postalCode(faker.address().zipCode())
+//                        .build()},
 
-                {Contact.builder().lastName(faker.name().lastName()).accountName(faker.name().firstName()).build()},
+                {Contact.builder().lastName(faker.name().lastName()).accountName(faker.name().firstName())
+                        .mailingAddress("Minsk").street("Ykrainki").province("Minskiy").postalCode(faker.address().zipCode())
+                        .build()},
         };
     }
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 @Builder
 public class Lead {
 
+    public static Lead LeadBuilder;
     private String firstName;
     private String lastName;
     private String company;
@@ -27,7 +28,6 @@ public class Lead {
     private String postalCode;
     private String numberOfEmployees;
     private String webSite;
-    private String fullName;
 
 }
 

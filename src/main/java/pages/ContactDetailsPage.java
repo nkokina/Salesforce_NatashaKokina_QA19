@@ -18,21 +18,20 @@ public class ContactDetailsPage extends BasePage {
 
     public Contact getContactInfo() {
         log.info("Retrieving existing values from a partition Details");
-        String lastName = new LightningFormattedElement(driver, "Name").getText();
+        Contact.ContactBuilder contactBuilder = Contact.builder();
         String accountName = new LightningFormattedElement(driver, "Account Name").getText();
-        Contact.ContactBuilder contactBuilder = Contact.builder().lastName(lastName).accountName(accountName);
-        String firstName = new LightningFormattedElement(driver, "Name").getText();
-        if (firstName != "") {
-            contactBuilder.firstName(firstName);
+        String name = new LightningFormattedElement(driver, "Name").getText();
+
+        String[] parsedName = name.split(" ");
+
+        if (parsedName.length == 5) {
+            contactBuilder.salutation(Salutation.fromString(parsedName[0]))
+                    .firstName(parsedName[1])
+                    .middleName(parsedName[2])
+                    .lastName(parsedName[3])
+                    .suffix(parsedName[4]);
         }
-        String middleName = new LightningFormattedElement(driver, "Name").getText();
-        if (middleName != "") {
-            contactBuilder.middleName(middleName);
-        }
-        String suffix = new LightningFormattedElement(driver, "Name").getText();
-        if (suffix != "") {
-            contactBuilder.suffix(suffix);
-        }
+        contactBuilder.accountName(accountName);
         String title = new LightningFormattedElement(driver, "Title").getText();
         if (title != "") {
             contactBuilder.title(title);
@@ -49,11 +48,7 @@ public class ContactDetailsPage extends BasePage {
         if (mobilePhone != "") {
             contactBuilder.mobilePhone(mobilePhone);
         }
-        String reportsTo = new LightningFormattedElement(driver, "Reports To").getText();
-        if (reportsTo != "") {
-            contactBuilder.reportsTo(reportsTo);
-        }
-        String department = new LightningFormattedElement(driver, "Department").getText();
+            String department = new LightningFormattedElement(driver, "Department").getText();
         if (department != "") {
             contactBuilder.department(department);
         }
@@ -61,27 +56,14 @@ public class ContactDetailsPage extends BasePage {
         if (fax != "") {
             contactBuilder.fax(fax);
         }
-        String address = new LightningFormattedElement(driver, "Mailing Address").getText();
-        if (address != "") {
-            contactBuilder.mailingAddress(address);
-        }
-        String street = new LightningFormattedElement(driver, "Mailing Address").getText();
-        if (street != "") {
-            contactBuilder.street(street);
-        }
-        String province = new LightningFormattedElement(driver, "Mailing Address").getText();
-        if (province != "") {
-            contactBuilder.province(province);
-        }
-        String postalCode = new LightningFormattedElement(driver, "Mailing Address").getText();
-        if (postalCode != "") {
-            contactBuilder.postalCode(postalCode);
-        }
-        String salutation = new LightningFormattedElement(driver, "Name").getText();
-        if (salutation != "") {
-            contactBuilder.salutation(Salutation.fromString(salutation));
-        }
-        return Contact.builder().build();
+        String address = new LightningFormattedElement(driver, "Mailing Address").getText().replace('\n',' ');
+        String[] parsedAddress = address.split(" ");
+        contactBuilder.street(parsedAddress[0])
+                .mailingAddress(parsedAddress[1])
+                .province(parsedAddress[2])
+                .postalCode(parsedAddress[3]);
+
+        return contactBuilder.build();
     }
 }
 

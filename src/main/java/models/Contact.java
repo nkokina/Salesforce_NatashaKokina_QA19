@@ -21,7 +21,6 @@ public class Contact {
     private String accountName;
     private String postalCode;
     private String description;
-    private String reportsTo;
     private String department;
     private String mailingAddress;
     private String fax;

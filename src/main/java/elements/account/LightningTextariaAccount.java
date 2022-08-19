@@ -1,5 +1,6 @@
-package elements;
+package elements.account;
 
+import elements.BaseElement;
 import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,11 +9,11 @@ import org.openqa.selenium.WebElement;
 import java.util.Objects;
 
 @Log4j2
-public class LightningTextaria extends BaseElement {
+public class LightningTextariaAccount extends BaseElement {
 
-    private final static String TEXTARIA_LOCATOR = "//label[text()='%s']/following-sibling::div/textarea";
+    private final static String TEXTARIA_LOCATOR = "//span[text()='%s']/../following-sibling::textarea";
 
-    public LightningTextaria(WebDriver driver, String label) {
+    public LightningTextariaAccount(WebDriver driver, String label) {
         super(driver, label);
     }
 

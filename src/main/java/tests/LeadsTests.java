@@ -1,6 +1,9 @@
 package tests;
 
-import enums.*;
+import enums.Industry;
+import enums.LeadSource;
+import enums.LeadStatus;
+import enums.Salutation;
 import models.Lead;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -38,8 +41,7 @@ public class LeadsTests extends BaseTest {
         leadsPage.waitForPopupPresent();
         Assert.assertTrue(leadsPage.isConfimationPopupPresent("was created"), "Lead not saved");
         leadsPage.openDetails();
-        leadsDetailsPage.getLeadInfo();
-        Assert.assertEquals(leadsDetailsPage.getLeadInfo(), testLead);
+        Assert.assertEquals(leadsDetailsPage.getLeadInfo(), testLead, "Data does not match");
     }
 
     @DataProvider(name = "newLeadData")
@@ -49,11 +51,14 @@ public class LeadsTests extends BaseTest {
                         .firstName(faker.name().firstName()).salutation(Salutation.MS).suffix(faker.name().suffix())
                         .middleName(faker.name().username()).title(faker.name().title()).email(faker.internet().emailAddress())
                         .webSite(faker.internet().emailAddress()).phone(faker.phoneNumber().phoneNumber())
-                        .mobilePhone(faker.phoneNumber().phoneNumber()).rating(Rating.HOT).industry(Industry.BIOTECHNOLOGY)
-                        .numberOfEmployees(faker.number().digit()).leadSource(LeadSource.EMPLOYEE).address(faker.address().cityName())
-                        .street(faker.address().streetName()).province(faker.address().state()).postalCode(faker.address().zipCode())
+                        .mobilePhone(faker.phoneNumber().phoneNumber()).industry(Industry.BIOTECHNOLOGY)
+                        .numberOfEmployees(faker.number().digit()).leadSource(LeadSource.EMPLOYEE)
+                        .address("Minsk").street("Ykrainki").province("Minskiy").postalCode(faker.address().zipCode())
                         .build()},
-                {Lead.builder().company(faker.company().name()).leadStatus(LeadStatus.WORKING).lastName(faker.name().lastName()).build()},
+                {Lead.builder().company(faker.company().name()).leadStatus(LeadStatus.WORKING).lastName(faker.name().lastName())
+                        .firstName(faker.name().firstName()).salutation(Salutation.MS).suffix(faker.name().suffix())
+                        .middleName(faker.name().username()).address("Minsk").street("Ykrainki").province("Minskiy")
+                        .postalCode(faker.address().zipCode()).build()},
         };
     }
 }

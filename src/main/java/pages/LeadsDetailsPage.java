@@ -1,13 +1,15 @@
 package pages;
 
 import elements.LightningFormattedElement;
-import enums.*;
+import enums.Industry;
+import enums.LeadSource;
+import enums.LeadStatus;
+import enums.Salutation;
 import lombok.extern.log4j.Log4j2;
 import models.Lead;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import java.util.Objects;
 
 @Log4j2
 public class LeadsDetailsPage extends BasePage {
@@ -25,26 +27,26 @@ public class LeadsDetailsPage extends BasePage {
 
     public Lead getLeadInfo() {
         log.info("Retrieving existing values from a partition Details");
-        String company = new LightningFormattedElement(driver, "Company").getText();
-        String lastName = new LightningFormattedElement(driver, "Name").getText();
-        String leadStatus = new LightningFormattedElement(driver, "Lead Status").getText();
-        Lead.LeadBuilder leadBuilder = Lead.builder().company(company).lastName(lastName).leadStatus(LeadStatus.fromString(leadStatus));
+        Lead.LeadBuilder leadBuilder = Lead.builder();
 
-        String salutation = new LightningFormattedElement(driver, "Name").getText();
-        if (salutation != "") {
-            leadBuilder.salutation(Salutation.fromString(salutation));
-        }
-        String middleName = new LightningFormattedElement(driver, "Name").getText();
-        if (middleName != "") {
-            leadBuilder.middleName(middleName);
-        }
-        String suffix = new LightningFormattedElement(driver, "Name").getText();
-        if (suffix != "") {
-            leadBuilder.suffix(suffix);
-        }
+        String company = new LightningFormattedElement(driver, "Company").getText();
+        String name = new LightningFormattedElement(driver, "Name").getText();
+        String leadStatus = new LightningFormattedElement(driver, "Lead Status").getText();
+
+        String[] parsedName = name.split(" ");
+
+        leadBuilder.salutation(Salutation.fromString(parsedName[0]));
+        leadBuilder.firstName(parsedName[1]);
+        leadBuilder.middleName(parsedName[2]);
+        leadBuilder.lastName(parsedName[3]);
+        leadBuilder.suffix(parsedName[4]);
+
+        leadBuilder.company(company)
+                .leadStatus(LeadStatus.fromString(leadStatus));
+
         String title = new LightningFormattedElement(driver, "Title").getText();
         if (title != "") {
-            leadBuilder.phone(title);
+            leadBuilder.title(title);
         }
         String email = new LightningFormattedElement(driver, "Email").getText();
         if (email != "") {
@@ -62,10 +64,6 @@ public class LeadsDetailsPage extends BasePage {
         if (mobilePhone != "") {
             leadBuilder.mobilePhone(mobilePhone);
         }
-        String rating = new LightningFormattedElement(driver, "Rating").getText();
-        if (rating != "") {
-            leadBuilder.rating(Rating.fromString(rating));
-        }
         String industry = new LightningFormattedElement(driver, "Industry").getText();
         if (industry != "") {
             leadBuilder.industry(Industry.fromString(industry));
@@ -78,23 +76,13 @@ public class LeadsDetailsPage extends BasePage {
         if (leadSource != "") {
             leadBuilder.leadSource(LeadSource.fromString(leadSource));
         }
-        String address = new LightningFormattedElement(driver, "Address").getText();
-        if (address != "") {
-            leadBuilder.address(address);
-        }
-        String street = new LightningFormattedElement(driver, "Address").getText();
-        if (street != "") {
-            leadBuilder.street(street);
-        }
-        String province = new LightningFormattedElement(driver, "Address").getText();
-        if (!Objects.equals(province, "")) {
-            leadBuilder.province(province);
-        }
-        String postalCode = new LightningFormattedElement(driver, "Address").getText();
-        if (postalCode != "") {
-            leadBuilder.postalCode(postalCode);
-        }
+        String address = new LightningFormattedElement(driver, "Address").getText().replace('\n', ' ');
+        String[] parsedAddress = address.split(" ");
+        leadBuilder.street(parsedAddress[0])
+                .address(parsedAddress[1])
+                .province(parsedAddress[2])
+                .postalCode(parsedAddress[3]);
 
-        return Lead.builder().build();
+        return leadBuilder.build();
     }
 }

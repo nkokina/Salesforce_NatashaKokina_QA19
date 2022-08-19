@@ -33,7 +33,7 @@ public class AccountDetailsPage extends BasePage {
         if (description != "") {
             accountBuilder.description(description);
         }
-        String parentAccount = new LightningFormattedElement(driver, "ParentAccount").getText();
+        String parentAccount = new LightningFormattedElement(driver, "Parent Account").getText();
         if (parentAccount != "") {
             accountBuilder.parentAccount(parentAccount);
         }
@@ -49,39 +49,21 @@ public class AccountDetailsPage extends BasePage {
         if (employees != "") {
             accountBuilder.employees(employees);
         }
-        String billingAddress = new LightningFormattedElement(driver, "BillingAddress").getText();
-        if (billingAddress != "") {
-            accountBuilder.billingAddress(billingAddress);
-        }
-        String shippingAddress = new LightningFormattedElement(driver, "ShippingAddress").getText();
-        if (shippingAddress != "") {
-            accountBuilder.shippingAddress(shippingAddress);
-        }
-        String billingStreet = new LightningFormattedElement(driver, "BillingStreet").getText();
-        if (billingStreet != "") {
-            accountBuilder.billingStreet(billingStreet);
-        }
-        String shippingStreet = new LightningFormattedElement(driver, "ShippingStreet").getText();
-        if (shippingStreet != "") {
-            accountBuilder.shippingStreet(shippingStreet);
-        }
-        String billingProvince = new LightningFormattedElement(driver, "Billing Province").getText();
-        if (billingProvince != "") {
-            accountBuilder.billingProvince(billingProvince);
-        }
-        String shippingProvince = new LightningFormattedElement(driver, "Shipping Province").getText();
-        if (shippingProvince != "") {
-            accountBuilder.shippingProvince(shippingProvince);
-        }
-        String shippingPostalCode = new LightningFormattedElement(driver, "Shipping Postal Code").getText();
-        if (shippingPostalCode != "") {
-            accountBuilder.webSite(shippingPostalCode);
-        }
-        String billingPostalCode = new LightningFormattedElement(driver, "Billing Postal Code").getText();
-        if (billingPostalCode != "") {
-            accountBuilder.billingPostalCode(billingPostalCode);
-        }
-        return Account.builder().build();
+        String billingAddress = new LightningFormattedElement(driver, "Billing Address").getText().replace('\n',' ');
+        String[] parsedAddress = billingAddress .split(" ");
+        accountBuilder.billingStreet(parsedAddress[0])
+                .billingAddress(parsedAddress[1])
+                .billingProvince(parsedAddress[2])
+                .billingPostalCode(parsedAddress[3]);
+
+        String shippingAddress = new LightningFormattedElement(driver, "Shipping Address").getText().replace('\n',' ');
+        String[] parsedShippingAddress = shippingAddress .split(" ");
+        accountBuilder.shippingAddress(parsedShippingAddress[0])
+                .shippingStreet(parsedShippingAddress[1])
+                .shippingProvince(parsedShippingAddress[2])
+                .shippingPostalCode(parsedShippingAddress[3]);
+
+        return accountBuilder.build();
     }
 }
 
