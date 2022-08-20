@@ -11,7 +11,7 @@ import java.util.Objects;
 @Log4j2
 public class LightningInputAccountName extends BaseElement {
     private final static String NAME_LOCATOR =
-            "//span[text()='%s']/../following-sibling::div/div/div/div/input";
+    "//span[text()='%s']/../following-sibling::div[@class='uiInput forceSearchInputLookupDesktop uiInput--default']//input";
 
     public LightningInputAccountName(WebDriver driver, String label) {
         super(driver, label);

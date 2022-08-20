@@ -1,5 +1,6 @@
 package tests;
 
+import enums.Salutation;
 import models.Contact;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -42,13 +43,13 @@ public class ContactTests extends BaseTest {
     @DataProvider
     public Object[][] createContactTestData() {
         return new Object[][]{
-//                {Contact.builder().lastName(faker.name().lastName()).firstName(faker.name().firstName()).salutation(Salutation.MS)
-//                        .middleName(faker.name().username()).suffix(faker.name().suffix()).title(faker.name().title())
-//                        .email(faker.internet().emailAddress()).phone(faker.phoneNumber().phoneNumber())
-//                        .mobilePhone(faker.phoneNumber().phoneNumber()).accountName(faker.name().name())
-//                        .department(faker.company().name()).fax(faker.phoneNumber().phoneNumber())
-//                        .mailingAddress("Minsk").street("Ykrainki").province("Minskiy").postalCode(faker.address().zipCode())
-//                        .build()},
+                {Contact.builder().lastName(faker.name().lastName()).firstName(faker.name().firstName()).salutation(Salutation.MS)
+                        .middleName(faker.name().username()).suffix(faker.name().suffix()).title(faker.name().title())
+                        .email(faker.internet().emailAddress()).phone(faker.phoneNumber().phoneNumber())
+                        .mobilePhone(faker.phoneNumber().phoneNumber()).accountName(faker.name().name())
+                        .department(faker.company().name()).fax(faker.phoneNumber().phoneNumber())
+                        .mailingAddress("Minsk").street("Ykrainki").province("Minskiy").postalCode(faker.address().zipCode())
+                        .build()},
 
                 {Contact.builder().lastName(faker.name().lastName()).accountName(faker.name().firstName())
                         .mailingAddress("Minsk").street("Ykrainki").province("Minskiy").postalCode(faker.address().zipCode())
