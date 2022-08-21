@@ -21,7 +21,6 @@ public class Lead {
     private String phone;
     private String mobilePhone;
     private Salutation salutation;
-    private Rating rating;
     private Industry industry;
     private LeadStatus leadStatus;
     private LeadSource leadSource;

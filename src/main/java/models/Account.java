@@ -15,7 +15,6 @@ public class Account {
     private String accountName;
     private String description;
     private String webSite;
-    private String parentAccount;
     private String employees;
     private String billingAddress;
     private String shippingAddress;

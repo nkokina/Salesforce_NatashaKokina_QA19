@@ -76,7 +76,7 @@ public class LeadsDetailsPage extends BasePage {
         if (leadSource != "") {
             leadBuilder.leadSource(LeadSource.fromString(leadSource));
         }
-        String address = new LightningFormattedElement(driver, "Address").getText().replace('\n', ' ');
+        String address = new LightningFormattedElement(driver, "Address").getText().replace('\n', ' ').replace(",", "");
         String[] parsedAddress = address.split(" ");
         leadBuilder.street(parsedAddress[0])
                 .address(parsedAddress[1])

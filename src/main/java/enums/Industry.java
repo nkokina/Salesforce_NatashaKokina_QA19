@@ -42,7 +42,7 @@ public enum Industry {
     }
     public static Industry fromString(String value) {
         for (Industry contactIndustry : Industry.values()) {
-            if (contactIndustry.getName().equals(value)) {
+            if (contactIndustry.name.equals(value)) {
                 return contactIndustry;
             }
         }

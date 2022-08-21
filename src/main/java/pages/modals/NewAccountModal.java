@@ -15,7 +15,6 @@ public class NewAccountModal extends BaseModal {
     public void fillingOutTheForm(Account inputAccount) {
         log.info(String.format("Creating new Account with Aname=%s", inputAccount.getAccountName()));
         new LightningInputAccountName(driver, "Account Name").seyValue(inputAccount.getAccountName());
-        new LightningBaseComboboxAccount(driver, "Search Accounts...").selectByVisibleText(inputAccount.getParentAccount());
         new LightningInputAccount(driver, "Website").seyValue(inputAccount.getWebSite());
         new LightningTextariaAccount(driver, "Description").setValue(inputAccount.getDescription());
         new LightningInputAccount(driver, "Phone").seyValue(inputAccount.getPhone());

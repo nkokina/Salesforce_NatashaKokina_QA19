@@ -18,7 +18,7 @@ public enum Salutation {
 
     public static Salutation fromString(String value) {
         for (Salutation contactSalutation : Salutation.values()) {
-            if (contactSalutation.getName().equals(value)) {
+            if (contactSalutation.name.equals(value)) {
                 return contactSalutation;
             }
         }

@@ -19,7 +19,7 @@ public enum LeadStatus {
 
     public static LeadStatus fromString(String value) {
         for (LeadStatus contactLeadStatus : LeadStatus.values()) {
-            if (contactLeadStatus.getName().equals(value)) {
+            if (contactLeadStatus.name.equals(value)) {
                 return contactLeadStatus;
             }
         }

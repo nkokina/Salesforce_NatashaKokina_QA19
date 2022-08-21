@@ -19,7 +19,9 @@ public class ContactDetailsPage extends BasePage {
     public Contact getContactInfo() {
         log.info("Retrieving existing values from a partition Details");
         Contact.ContactBuilder contactBuilder = Contact.builder();
-        String accountName = new LightningFormattedElement(driver, "Account Name").getText();
+        String account = new LightningFormattedElement(driver, "Account Name").getText();
+       String accountName=account.substring(account.indexOf("Open")+5, account.indexOf("Preview")-1);
+
         String name = new LightningFormattedElement(driver, "Name").getText();
 
         String[] parsedName = name.split(" ");
@@ -56,7 +58,7 @@ public class ContactDetailsPage extends BasePage {
         if (fax != "") {
             contactBuilder.fax(fax);
         }
-        String address = new LightningFormattedElement(driver, "Mailing Address").getText().replace('\n',' ');
+        String address = new LightningFormattedElement(driver, "Mailing Address").getText().replace('\n',' ').replace(",","");
         String[] parsedAddress = address.split(" ");
         contactBuilder.street(parsedAddress[0])
                 .mailingAddress(parsedAddress[1])

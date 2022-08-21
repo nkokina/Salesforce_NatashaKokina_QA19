@@ -25,7 +25,7 @@ public enum LeadSource {
 
     public static LeadSource fromString (String value) {
         for (LeadSource contactLeadSource : LeadSource.values()) {
-            if (contactLeadSource.getName().equals(value)) {
+            if (contactLeadSource.name.equals(value)) {
                 return contactLeadSource;
             }
         }

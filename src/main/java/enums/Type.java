@@ -24,7 +24,7 @@ public enum Type {
 
     public static Type fromString(String value) {
         for (Type contactType : Type.values()) {
-            if (contactType.getName().equals(value)) {
+            if (contactType.name.equals(value)) {
                 return contactType;
             }
         }

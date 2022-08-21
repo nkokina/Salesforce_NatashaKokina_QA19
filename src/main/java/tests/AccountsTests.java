@@ -46,14 +46,18 @@ public class AccountsTests extends BaseTest {
     public Object[][] createAccountTestData() {
         return new Object[][]{
                 {Account.builder().accountName(faker.name().username()).type(Type.CUSTOMER).webSite(faker.internet().url())
-                        .description(faker.name().nameWithMiddle()).parentAccount(faker.name().name())
+                        .description(faker.name().nameWithMiddle())
                         .phone(faker.phoneNumber().phoneNumber()).industry(Industry.BIOTECHNOLOGY)
                         .employees(faker.number().digit()).shippingAddress("Minsk")
-                        .billingAddress("Minsk").billingStreet(faker.address().streetAddress())
-                        .shippingStreet(faker.address().streetAddress()).billingProvince(faker.address().state())
-                        .shippingProvince(faker.address().state()).shippingPostalCode(faker.address().zipCode())
+                        .billingAddress("Minsk").billingStreet("Ykrainki")
+                        .shippingStreet("Ykrainki").billingProvince("Minskiy")
+                        .shippingProvince("Minskiy").shippingPostalCode(faker.address().zipCode())
                         .billingPostalCode(faker.address().zipCode()).build()},
-                {Account.builder().accountName(faker.name().username()).build()},
+                {Account.builder().accountName(faker.name().username()).shippingAddress("Minsk")
+                        .billingAddress("Minsk").billingStreet("Ykrainki")
+                        .shippingStreet("Ykrainki").billingProvince("Minskiy")
+                        .shippingProvince("Minskiy").shippingPostalCode(faker.address().zipCode())
+                        .billingPostalCode(faker.address().zipCode()).build()},
         };
     }
 }

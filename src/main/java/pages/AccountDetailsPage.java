@@ -19,8 +19,9 @@ public class AccountDetailsPage extends BasePage {
 
     public Account getAccountInfo() {
         log.info("Retrieving existing values from a partition Details");
+        Account.AccountBuilder accountBuilder = Account.builder();
         String accountName = new LightningFormattedElement(driver, "Account Name").getText();
-        Account.AccountBuilder accountBuilder = Account.builder().accountName(accountName);
+        accountBuilder.accountName(accountName);
         String type = new LightningFormattedElement(driver, "Type").getText();
         if (type != "") {
             accountBuilder.type(Type.fromString(type));
@@ -32,10 +33,6 @@ public class AccountDetailsPage extends BasePage {
         String description = new LightningFormattedElement(driver, "Description").getText();
         if (description != "") {
             accountBuilder.description(description);
-        }
-        String parentAccount = new LightningFormattedElement(driver, "Parent Account").getText();
-        if (parentAccount != "") {
-            accountBuilder.parentAccount(parentAccount);
         }
         String phone = new LightningFormattedElement(driver, "Phone").getText();
         if (phone != "") {
@@ -49,17 +46,17 @@ public class AccountDetailsPage extends BasePage {
         if (employees != "") {
             accountBuilder.employees(employees);
         }
-        String billingAddress = new LightningFormattedElement(driver, "Billing Address").getText().replace('\n',' ');
+        String billingAddress = new LightningFormattedElement(driver, "Billing Address").getText().replace('\n',' ').replace(",", "");
         String[] parsedAddress = billingAddress .split(" ");
         accountBuilder.billingStreet(parsedAddress[0])
                 .billingAddress(parsedAddress[1])
                 .billingProvince(parsedAddress[2])
                 .billingPostalCode(parsedAddress[3]);
 
-        String shippingAddress = new LightningFormattedElement(driver, "Shipping Address").getText().replace('\n',' ');
+        String shippingAddress = new LightningFormattedElement(driver, "Shipping Address").getText().replace('\n',' ').replace(",", "");
         String[] parsedShippingAddress = shippingAddress .split(" ");
-        accountBuilder.shippingAddress(parsedShippingAddress[0])
-                .shippingStreet(parsedShippingAddress[1])
+        accountBuilder.shippingAddress(parsedShippingAddress[1])
+                .shippingStreet(parsedShippingAddress[0])
                 .shippingProvince(parsedShippingAddress[2])
                 .shippingPostalCode(parsedShippingAddress[3]);
 

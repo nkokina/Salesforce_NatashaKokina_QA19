@@ -46,12 +46,13 @@ public class ContactTests extends BaseTest {
                 {Contact.builder().lastName(faker.name().lastName()).firstName(faker.name().firstName()).salutation(Salutation.MS)
                         .middleName(faker.name().username()).suffix(faker.name().suffix()).title(faker.name().title())
                         .email(faker.internet().emailAddress()).phone(faker.phoneNumber().phoneNumber())
-                        .mobilePhone(faker.phoneNumber().phoneNumber()).accountName(faker.name().name())
+                        .mobilePhone(faker.phoneNumber().phoneNumber()).accountName(faker.name().lastName())
                         .department(faker.company().name()).fax(faker.phoneNumber().phoneNumber())
                         .mailingAddress("Minsk").street("Ykrainki").province("Minskiy").postalCode(faker.address().zipCode())
                         .build()},
 
-                {Contact.builder().lastName(faker.name().lastName()).accountName(faker.name().firstName())
+                {Contact.builder().lastName(faker.name().lastName()).firstName(faker.name().firstName()).salutation(Salutation.MS)
+                        .middleName(faker.name().username()).suffix(faker.name().suffix()).accountName(faker.name().firstName())
                         .mailingAddress("Minsk").street("Ykrainki").province("Minskiy").postalCode(faker.address().zipCode())
                         .build()},
         };
